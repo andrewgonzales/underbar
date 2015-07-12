@@ -206,8 +206,18 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if (iterator === undefined){
+      iterator = Boolean;
+    }
+    var all = _.every(collection, iterator);
+    var antiIterator = function(item) {return !iterator(item);};
+    var none = _.every(collection, antiIterator);
+    if(all){
+      return none ? false : true   //All and none are both true only for empty collections. Otherwise, if all, then some.
+    }else {
+      return !none ? true : false  //Not all and not none is some
+    }
   };
-
 
   /**
    * OBJECTS
