@@ -250,6 +250,15 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var defaults = obj;
+    _.each(arguments, function(collection) {
+      _.each(collection, function(item, key) {
+        if(!defaults.hasOwnProperty(key)) {
+          defaults[key] = item;
+        }
+      });
+    });
+    return defaults;
   };
 
 
